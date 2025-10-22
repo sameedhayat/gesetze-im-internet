@@ -12,9 +12,10 @@ def main():
     updated = 0
 
     session = requests.Session()
-    for title, link in tqdm(list(extract_law_links(toc_xml)), desc="Checking laws"):
-        if download_law(title, link, session, state):
+    for short_name, link, title in tqdm(list(extract_law_links(toc_xml)), desc="Checking laws"):
+        if download_law(short_name, link, session, state, title=title):
             updated += 1
+
 
     save_state(STATE_FILE, state)
     print(f"\n✅ Done. {updated} laws updated.")
